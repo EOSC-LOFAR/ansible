@@ -1,0 +1,6 @@
+.virtualenv/
+.virtualenv3/
+.venv/
+.venv3/
+hosts
+site.retry

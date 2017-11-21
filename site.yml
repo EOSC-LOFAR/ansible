@@ -1,0 +1,24 @@
+- hosts: all
+  remote_user: ubuntu
+  become: true
+  tasks:
+    - name: Upgrade all packages to the latest version
+      apt:
+        name: "*"
+        state: latest
+    - name: add KERN-3 repo
+      apt_repository:
+        repo: 'ppa:kernsuite/kern-3'
+    - name: install https apt transport
+      apt:
+        name: apt-transport-https
+    - name: Add docker rep okey
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: enalbe docker repo
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu trusty stable 
+    - name: install docker
+      apt:
+        name: docker-ce
