@@ -2,23 +2,39 @@
   remote_user: ubuntu
   become: true
   tasks:
+    - name: install pip
+      apt: name={{item}} state=installed
+      with_items:
+        - python-setuptools
+        - python-pip
+        - python-pkg-resources
+
+    - name: install cwltool
+      pip:
+        name: cwltool toil[cwl]
+
     - name: Upgrade all packages to the latest version
       apt:
-        name: "*"
         state: latest
+
     - name: add KERN-3 repo
       apt_repository:
-        repo: 'ppa:kernsuite/kern-3'
+        repo: ppa:kernsuite/kern-3
+
     - name: install https apt transport
       apt:
         name: apt-transport-https
-    - name: Add docker rep okey
+
+    - name: Add docker repo key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
-    - name: enalbe docker repo
+
+    - name: enable docker repo
       apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu trusty stable 
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+
     - name: install docker
       apt:
         name: docker-ce
+

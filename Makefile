@@ -1,8 +1,5 @@
 
-all: hosts ansible
-
-.PHONY: hosts
-
+all: ansible
 
 .virtualenv/:
 	python -p python2 .virtualenv/
