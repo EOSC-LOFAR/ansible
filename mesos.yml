@@ -1,0 +1,19 @@
+# first run:
+#
+# $ ansible-galaxy install geerlingguy.java
+# $ ansible-galaxy install AnsibleShipyard.ansible-zookeeper
+# $ ansible-galaxy install JasonGiedymin.mesos
+# §
+
+- name: Java + Zookeeper + Mesos [master-slave]
+  hosts: all
+  remote_user: ubuntu
+  sudo: yes
+  roles:
+    - role: geerlingguy.java
+
+    - role: AnsibleShipyard.ansible-zookeeper
+
+    - role: JasonGiedymin.mesos
+      mesos_install_mode: master-slave
+

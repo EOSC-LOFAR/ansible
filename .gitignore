@@ -3,5 +3,5 @@
 .venv/
 .venv3/
 hosts
-site.retry
+*.retry
 .ipynb_checkpoints/
