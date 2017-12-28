@@ -21,13 +21,13 @@
         - make
         - nodejs-legacy
         - build-essential 
-        - libpython2.7-dev
+        - python-dev
 
     - name: install cwltool
       pip: name={{item}}
       with_items:
         - cwltool
-        - -e git://github.com/BD2KGenomics/toil.git@4c234e6b793737e9fa88019941241062b30c97c7#egg=toil[cwl]
+        - git+git://github.com/BD2KGenomics/toil.git@4c234e6b793737e9fa88019941241062b30c97c7#egg=toil[cwl]
         - boto
         - pycrypto
         - html5lib
