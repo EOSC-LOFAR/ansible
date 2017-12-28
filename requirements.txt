@@ -1,5 +1,2 @@
 -e git://github.com/python-oca/python-oca.git@0dfd181ee44d4ea05466ca4ed814d290c2c6fcfa#egg=oca
 click
-
-
-

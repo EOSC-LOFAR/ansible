@@ -1,4 +1,5 @@
 - hosts: all
+  strategy: free
   remote_user: ubuntu
   become: true
   tasks:
@@ -19,6 +20,8 @@
         - git
         - make
         - nodejs-legacy
+        - build-essential 
+        - libpython2.7-dev
 
     - name: install cwltool
       pip: name={{item}}

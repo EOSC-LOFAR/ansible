@@ -1,29 +1,41 @@
 # ansible
-scripts for automated deployment of surfsara HPCcloud nodes
 
-Usage:
+scripts for automated deployment of surfsara HPCcloud nodes. It will
+install all requirements to run the EOSC-LOFAR pipelines in all it forms.
+
+Note that this is just an example to illustrate how this might work and is
+not intended for end user usage. The makefile is a collection of example
+commands.
+
+# requirements
+
+To make this work you need:
+* To have access to HPC cloud
+* Have a pub/priv keypair configured before you created any of the VM's
+* Prepared a VM template in the UI (see oca_helper.py)
+* Have ansible, python virtualenv and make installed on the system where you
+  run this script
+
+
+# usage
 * Create a file ~/.surfsara containing:
 ```
 user=<cloud username>
 pass=<hpccloud password>
 ```
 
-now if you run list.py it will return a list of IPs of active VMs.
-
-* Install ansible to configure all these IPs automatically by running:
+now to create some nodes run:
 ```
-$ make
+make create
 ```
-Note that this is just an example to illustrate how this might work.
 
-To make this work you need:
-* To have access to HPC cloud
-* Have some VM's deployed
-* Have a pub/priv keypair configured (before you created the VMs)
-* For now Ubuntu 16.04 is assumed as target VM.
+To destroy all nodes:
+```
+make destroy
+```
 
+To install all software all nodes run:
+```
+make ansible
+```
 
-The script will:
-* Enable KERN-3
-* Install the latest docker
-* Install toil and the CWL rererence runner.

@@ -22,6 +22,7 @@ import oca
 import os
 import sys
 
+
 # settings
 DEFAULT_TEMPLATE_ID = 7890
 DEFAULT_MEMORY = 2048  # GB
@@ -66,22 +67,25 @@ def cli(context):
 
 
 @cli.command()
+@click.option('--inactive', default=False, type=bool)
 @click.pass_obj
-def iplist(client):
+def iplist(client, inactive):
     vp = oca.VirtualMachinePool(client)
     vp.info()
     click.echo("[nodes]")
     for vm in vp:
+        if not inactive and (vm.state != vm.ACTIVE):
+            continue
         ip_list = list(v.ip for v in vm.template.nics)
         click.echo(ip_list[0])
 
 
 @cli.command()
-@click.option('--memory', default=DEFAULT_MEMORY)
-@click.option('--cpu', default=DEFAULT_CPU)
-@click.option('--vcpu', default=DEFAULT_VCPU)
-@click.option('--number', help='Number of nodes', default=DEFAULT_NODES_NUM)
-@click.option('--template_id', default=DEFAULT_TEMPLATE_ID)
+@click.option('--memory', default=DEFAULT_MEMORY, type=int)
+@click.option('--cpu', default=DEFAULT_CPU, type=float)
+@click.option('--vcpu', default=DEFAULT_VCPU, type=int)
+@click.option('--number', help='Number of nodes', default=DEFAULT_NODES_NUM, type=int)
+@click.option('--template_id', default=DEFAULT_TEMPLATE_ID, type=int)
 @click.pass_obj
 def create(client, memory, cpu, vcpu, number, template_id):
     extra_template = """
