@@ -10,7 +10,8 @@ Also you need to do some tasks manually since the OCA API is an unmaintained
  * login to https://ui.hpccloud.surfsara.nl/
  * make sure you are in the user view
  * go to Apps
- * select an "app" (like Ubuntu-16.04.3-Server (2017-12-07)) and press "openNebula"
+ * select an "app" (like Ubuntu-16.04.3-Server (2017-12-07)) and press
+   "openNebula"
  * select local_images_ssh datastore and then press "download"
  * Go to VM Templates view and notice VM template ID. Use that ID
    on the CLI or change in this script.

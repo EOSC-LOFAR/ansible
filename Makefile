@@ -6,7 +6,7 @@ all: ansible
 	.virtualenv/bin/pip install -r requirements.txt
 
 hosts:
-	.virtualenv/bin/python list.py > hosts
+	.virtualenv/bin/python oca_helper.py iplist > hosts
 
 ansible: hosts
 	ansible-playbook -i hosts site.yml

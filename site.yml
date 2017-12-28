@@ -18,10 +18,16 @@
         - apt-transport-https
         - git
         - make
+        - nodejs-legacy
 
     - name: install cwltool
-      pip:
-        name: cwltool toil[cwl]
+      pip: name={{item}}
+      with_items:
+        - cwltool
+        - -e git://github.com/BD2KGenomics/toil.git@4c234e6b793737e9fa88019941241062b30c97c7#egg=toil[cwl]
+        - boto
+        - pycrypto
+        - html5lib
 
     - name: add KERN-3 repo
       apt_repository:
@@ -40,21 +46,14 @@
       apt:
         name: docker-ce
 
+    - name: install singularity
+      apt:
+        name: singularity-container
+
     - name: Adding ubuntu user to group docker
       user: name=ubuntu
             groups=docker
             append=yes
-
-    - name: Add packagecloud signing key
-      apt_key: url=https://packagecloud.io/gpg.key state=present
-
-    - name: add git-lfs repository
-      apt_repository:
-        repo: deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main
-        
-    - name: Ensure github git-lfs is installed
-      apt:
-        name: git-lfs
 
     - name: Creates work directory
       file:
