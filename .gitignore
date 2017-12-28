@@ -4,3 +4,4 @@
 .venv3/
 hosts
 site.retry
+.ipynb_checkpoints/

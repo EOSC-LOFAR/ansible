@@ -2,35 +2,37 @@
   remote_user: ubuntu
   become: true
   tasks:
-    - name: install pip
+    - name: Upgrade all packages to the latest version
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: install required packages
       apt: name={{item}} state=installed
       with_items:
         - python-setuptools
         - python-pip
         - python-pkg-resources
+        - virtualenv
+        - debian-archive-keyring
+        - apt-transport-https
+        - git
+        - make
 
     - name: install cwltool
       pip:
         name: cwltool toil[cwl]
 
-    - name: Upgrade all packages to the latest version
-      apt:
-        state: latest
-
     - name: add KERN-3 repo
       apt_repository:
         repo: ppa:kernsuite/kern-3
 
-    - name: install https apt transport
-      apt:
-        name: apt-transport-https
-
-    - name: Add docker repo key
+    - name: Add docker repository key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: enable docker repo
+    - name: enable docker repository
       apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
 
@@ -38,3 +40,31 @@
       apt:
         name: docker-ce
 
+    - name: Adding ubuntu user to group docker
+      user: name=ubuntu
+            groups=docker
+            append=yes
+
+    - name: Add packagecloud signing key
+      apt_key: url=https://packagecloud.io/gpg.key state=present
+
+    - name: add git-lfs repository
+      apt_repository:
+        repo: deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main
+        
+    - name: Ensure github git-lfs is installed
+      apt:
+        name: git-lfs
+
+    - name: Creates work directory
+      file:
+        path: /code
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: 0775
+
+    - name: cloning prefactor repository
+      git:
+        repo: https://github.com/EOSC-LOFAR/prefactor-cwl
+        dest: /code/prefactor-cwl
