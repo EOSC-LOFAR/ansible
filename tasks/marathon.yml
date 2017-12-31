@@ -1,0 +1,30 @@
+---
+- name: making conf directory
+  file:
+    path: /etc/marathon/conf
+    state: directory
+
+- name: setting hostname
+  copy:
+    content: "{{ inventory_hostname }}"
+    dest: /etc/marathon/conf/hostname
+
+- name: pointing marathon to zookeeper
+  template:
+    src: templates/zk
+    dest: /etc/marathon/conf/master
+
+- name: pointing marathon to zookeeper with marathon namesapce
+  template:
+    src: templates/zk.marathon
+    dest: /etc/marathon/conf/zk
+
+- name: restart marathon
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: marathon
+
+
+
+

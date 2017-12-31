@@ -25,6 +25,11 @@
     src: "templates/zoo.cfg"
     dest: "/etc/zookeeper/conf/zoo.cfg"
 
+- name: (UFW) allow surfsara cluster access to zookeeper
+  ufw:
+    rule: allow
+    src: 145.100.56.0/22
+
 - name: Start zookeeper
   command: /usr/share/zookeeper/bin/zkServer.sh restart
 

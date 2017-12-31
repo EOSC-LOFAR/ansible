@@ -1,0 +1,22 @@
+---
+- name: install marathon and chronos
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items:
+    - marathon
+    - chronos
+
+- name: setting mesos ip
+  copy:
+    content: "{{ inventory_hostname }}"
+    dest: /etc/mesos-master/ip
+
+- name: setting mesos hostname
+  copy:
+    content: "{{ inventory_hostname }}"
+    dest: /etc/mesos-master/hostname
+
+- name: restart mesos-master
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: mesos-master

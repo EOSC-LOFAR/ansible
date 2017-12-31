@@ -1,0 +1,21 @@
+---
+- name: setting mesos ip
+  copy:
+    content: "{{ inventory_hostname }}"
+    dest: /etc/mesos-slave/ip
+
+- name: setting mesos hostname
+  copy:
+    content: "{{ inventory_hostname }}"
+    dest: /etc/mesos-slave/hostname
+
+- name: restart mesos-slave
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: mesos-slave
+
+- name: (UFW) allow surfsara cluster access to zookeeper
+  ufw:
+    rule: allow
+    src: 145.100.56.0/22

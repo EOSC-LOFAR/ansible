@@ -3,70 +3,8 @@
   remote_user: ubuntu
   become: true
   tasks:
-    - name: Upgrade all packages to the latest version
-      apt:
-        update_cache: yes
-        upgrade: yes
-
-    - name: install required packages
-      apt: name={{item}} state=installed
-      with_items:
-        - python-setuptools
-        - python-pip
-        - python-pkg-resources
-        - virtualenv
-        - debian-archive-keyring
-        - apt-transport-https
-        - git
-        - make
-        - nodejs-legacy
-        - build-essential 
-        - python-dev
-
-    - name: install cwltool
-      pip: name={{item}}
-      with_items:
-        - cwltool
-        - git+git://github.com/BD2KGenomics/toil.git@4c234e6b793737e9fa88019941241062b30c97c7#egg=toil[cwl]
-        - boto
-        - pycrypto
-        - html5lib
-
-    - name: add KERN-3 repo
-      apt_repository:
-        repo: ppa:kernsuite/kern-3
-
-    - name: Add docker repository key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-
-    - name: enable docker repository
-      apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
-
-    - name: install docker
-      apt:
-        name: docker-ce
-
-    - name: install singularity
-      apt:
-        name: singularity-container
-
-    - name: Adding ubuntu user to group docker
-      user: name=ubuntu
-            groups=docker
-            append=yes
-
-    - name: Creates work directory
-      file:
-        path: /code
-        state: directory
-        owner: ubuntu
-        group: ubuntu
-        mode: 0775
-
-    - name: cloning prefactor repository
-      git:
-        repo: https://github.com/EOSC-LOFAR/prefactor-cwl
-        dest: /code/prefactor-cwl
+    - import_tasks: tasks/cwl.yml
+    - import_tasks: tasks/kern.yml
+    - import_tasks: tasks/docker.yml
+    - import_tasks: tasks/singularity.yml
+    - import_tasks: tasks/prefactor.yml

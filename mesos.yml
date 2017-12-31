@@ -6,11 +6,13 @@
   tasks:
     - import_tasks: tasks/mesos.yml
     - import_tasks: tasks/zookeeper.yml
-    - apt:
-        pkg={{ item }} state=present update_cache=yes
-      with_items:
-        - marathon
-        - chronos
+    - import_tasks: tasks/mesos-master.yml
+    - import_tasks: tasks/marathon.yml
+    - import_tasks: tasks/cwl.yml
+    - import_tasks: tasks/kern.yml
+    - import_tasks: tasks/docker.yml
+    - import_tasks: tasks/singularity.yml
+    - import_tasks: tasks/prefactor.yml
 
 - name: slave
   hosts: slave
@@ -18,3 +20,9 @@
   become: true
   tasks:
     - import_tasks: tasks/mesos.yml
+    - import_tasks: tasks/mesos-slave.yml
+    - import_tasks: tasks/cwl.yml
+    - import_tasks: tasks/kern.yml
+    - import_tasks: tasks/docker.yml
+    - import_tasks: tasks/singularity.yml
+    - import_tasks: tasks/prefactor.yml

@@ -1,0 +1,4 @@
+---
+- name: add KERN-3 repo
+  apt_repository:
+    repo: ppa:kernsuite/kern-3

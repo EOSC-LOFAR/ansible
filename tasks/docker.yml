@@ -1,0 +1,24 @@
+---
+- name: install required packages
+  apt: name={{item}} state=installed
+  with_items:
+    - debian-archive-keyring
+    - apt-transport-https
+
+- name: Add docker repository key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: enable docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+
+- name: install docker
+  apt:
+    name: docker-ce
+
+- name: Adding ubuntu user to group docker
+  user: name=ubuntu
+        groups=docker
+        append=yes

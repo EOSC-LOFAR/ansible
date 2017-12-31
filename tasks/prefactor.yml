@@ -1,0 +1,19 @@
+---
+- name: install required packages
+  apt: name={{item}} state=installed
+  with_items:
+    - git
+    - make
+
+- name: Creates work directory
+  file:
+    path: /code
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: 0775
+
+- name: cloning prefactor repository
+  git:
+    repo: https://github.com/EOSC-LOFAR/prefactor-cwl
+    dest: /code/prefactor-cwl
