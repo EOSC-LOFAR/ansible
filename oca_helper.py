@@ -28,7 +28,7 @@ DEFAULT_TEMPLATE_ID = 7890
 DEFAULT_MEMORY = 2048  # GB
 DEFAULT_CPU = 4
 DEFAULT_VCPU = 4
-DEFAULT_NODES_NUM = 10
+DEFAULT_NODES_NUM = 4
 
 # you probably don't want to change these
 config_path = os.path.expanduser("~/.surfsara")

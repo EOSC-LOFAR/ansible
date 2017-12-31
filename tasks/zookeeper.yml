@@ -1,0 +1,31 @@
+- name: Install Zookeeper
+  apt: pkg=zookeeper state=present
+
+- name: Make missing conf directory
+  file:
+    path: /usr/lib/jvm/java-9-openjdk-amd64/conf/management/
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- name: Make missing symlink
+  file:
+    src: /etc/java-9-openjdk/management/management.properties
+    dest: /usr/lib/jvm/java-9-openjdk-amd64/conf/management/management.properties
+    state: link
+
+- name: set Zookeer ID to 1
+  copy:
+    content: "1"
+    dest: /etc/zookeeper/conf/myid
+
+- name: create zookeeper config
+  template:
+    src: "templates/zoo.cfg"
+    dest: "/etc/zookeeper/conf/zoo.cfg"
+
+- name: Start zookeeper
+  command: /usr/share/zookeeper/bin/zkServer.sh restart
+
+
