@@ -2,11 +2,13 @@
 - name: install required packages
   apt: name={{item}} state=installed
   with_items:
+    - build-essential
     - python-setuptools
     - python-pip
     - python-pkg-resources
     - nodejs-legacy
     - python-dev
+    - git
 
 - name: install cwltool
   pip: name={{item}}

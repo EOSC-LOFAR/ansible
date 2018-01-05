@@ -17,3 +17,8 @@
   git:
     repo: https://github.com/EOSC-LOFAR/prefactor-cwl
     dest: /code/prefactor-cwl
+
+- name: downloading 'small' dataset
+  make:
+    chdir: /code/prefactor-cwl
+    target: small

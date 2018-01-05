@@ -9,7 +9,7 @@ hosts: .virtualenv/
 	.virtualenv/bin/python oca_helper.py iplist > hosts
 
 ansible: hosts
-	ansible-playbook -i hosts site.yml
+	ansible-playbook -i hosts ansible.yml
 
 create: .virtualenv/
 	.virtualenv/bin/python oca_helper.py create

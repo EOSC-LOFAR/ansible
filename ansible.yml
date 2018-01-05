@@ -1,3 +1,13 @@
+- hosts: all
+  strategy: free
+  remote_user: ubuntu
+  become: true
+  tasks:
+    - import_tasks: tasks/cwl.yml
+    - import_tasks: tasks/kern.yml
+    - import_tasks: tasks/docker.yml
+    - import_tasks: tasks/singularity.yml
+    - import_tasks: tasks/prefactor.yml
 
 - name: master
   hosts: master
@@ -8,11 +18,6 @@
     - import_tasks: tasks/zookeeper.yml
     - import_tasks: tasks/mesos-master.yml
     - import_tasks: tasks/marathon.yml
-    - import_tasks: tasks/cwl.yml
-    - import_tasks: tasks/kern.yml
-    - import_tasks: tasks/docker.yml
-    - import_tasks: tasks/singularity.yml
-    - import_tasks: tasks/prefactor.yml
 
 - name: slave
   hosts: slave
@@ -21,8 +26,3 @@
   tasks:
     - import_tasks: tasks/mesos.yml
     - import_tasks: tasks/mesos-slave.yml
-    - import_tasks: tasks/cwl.yml
-    - import_tasks: tasks/kern.yml
-    - import_tasks: tasks/docker.yml
-    - import_tasks: tasks/singularity.yml
-    - import_tasks: tasks/prefactor.yml
